@@ -11,6 +11,8 @@ public interface ICategoryService {
 
     Category save(CategoryDto category);
 
+    void save(List<Category> categories);
+
     CategoryResDto update(CategoryDto category, String id);
 
     List<Category> getCategoryByTypeAndMonth(String month, String year, String type);

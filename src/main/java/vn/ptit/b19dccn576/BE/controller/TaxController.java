@@ -3,6 +3,7 @@ package vn.ptit.b19dccn576.BE.controller;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 import vn.ptit.b19dccn576.BE.common.BaseResponse;
 import vn.ptit.b19dccn576.BE.dto.CategoryPercentageResDto;
 import vn.ptit.b19dccn576.BE.dto.TaxByTypeAndYearDto;
@@ -62,7 +63,7 @@ public class TaxController {
         taxUsecase.export(response);
     }
 
-    @PostMapping("/upload")
+    @PostMapping(value = "/upload")
     public BaseResponse<String> uploadFile(@RequestParam("file") MultipartFile file){
         String message = "";
 

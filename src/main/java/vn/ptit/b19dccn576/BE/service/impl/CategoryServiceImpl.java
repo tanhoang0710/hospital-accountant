@@ -46,6 +46,11 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
+    public void save(List<Category> categories) {
+        categoryRepository.saveAll(categories);
+    }
+
+    @Override
     public CategoryResDto update(CategoryDto category, String id) {
         var idNumber = Long.parseLong(id);
         var existedCategory = categoryRepository

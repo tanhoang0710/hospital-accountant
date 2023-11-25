@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import vn.ptit.b19dccn576.BE.dto.CategoryPercentageResDto;
 import vn.ptit.b19dccn576.BE.dto.TaxByTypeAndYearDto;
 import vn.ptit.b19dccn576.BE.model.Item;
+import vn.ptit.b19dccn576.BE.service.IFileService;
 import vn.ptit.b19dccn576.BE.service.ITaxService;
 
 import java.io.IOException;
@@ -22,9 +23,11 @@ import static java.util.stream.Collectors.groupingBy;
 @Slf4j
 public class TaxUsecase implements ITaxUsecase {
     private ITaxService taxService;
+    private IFileService fileService;
 
-    public TaxUsecase(ITaxService taxService) {
+    public TaxUsecase(ITaxService taxService, IFileService fileService) {
         this.taxService = taxService;
+        this.fileService = fileService;
     }
 
     @Override
@@ -109,6 +112,6 @@ public class TaxUsecase implements ITaxUsecase {
 
     @Override
     public void importCategories(MultipartFile file) {
-
+        fileService.importCategories(file);
     }
 }
