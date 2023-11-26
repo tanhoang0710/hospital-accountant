@@ -8,6 +8,7 @@ import java.util.Date;
 @Builder
 @Data
 public class ItemResDto {
+    Long id;
     String name;
     Double price;
     Integer quantity;

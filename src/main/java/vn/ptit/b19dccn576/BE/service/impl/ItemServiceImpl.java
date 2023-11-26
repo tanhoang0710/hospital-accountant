@@ -2,6 +2,8 @@ package vn.ptit.b19dccn576.BE.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import vn.ptit.b19dccn576.BE.dto.ItemDto;
 import vn.ptit.b19dccn576.BE.dto.ItemResDto;
@@ -33,8 +35,17 @@ public class ItemServiceImpl implements IItemService {
     }
 
     @Override
-    public List<Item> getAllItems() {
-        return itemRepository.findAll();
+    public Page<ItemResDto> getAllItems(Pageable pageable, int typeId) {
+        return itemRepository.findByCategoryTypeId(pageable, (long) typeId).map(ele -> ItemResDto.builder()
+                .id(ele.getId())
+                .name(ele.getName())
+                .merchandise(ele.getMerchandise())
+                .categoryName(ele.getCategory().getName())
+                .price(ele.getPrice())
+                .quantity(ele.getQuantity())
+                .createdDate(ele.getCreatedDate())
+                .lastModifiedDate(ele.getLastModifiedDate())
+                .build());
     }
 
     @Override
