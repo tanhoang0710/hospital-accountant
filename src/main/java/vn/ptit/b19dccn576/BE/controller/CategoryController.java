@@ -13,14 +13,15 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/categories")
+@CrossOrigin(origins = "http://localhost:3000")
 public class CategoryController {
 
     @Autowired
     private ICategoryService categoryService;
 
     @GetMapping()
-    public BaseResponse<List<Category>> getAllUsers(){
-        return BaseResponse.ofSucceeded(categoryService.getAllCategories());
+    public BaseResponse<List<Category>> getAllUsers(@RequestParam int type){
+        return BaseResponse.ofSucceeded(categoryService.getAllCategories(type));
     }
 
     @PostMapping()

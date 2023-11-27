@@ -25,8 +25,8 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
-    public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
+    public List<Category> getAllCategories(int type) {
+        return categoryRepository.findByTypeId((long) type);
     }
 
     @Override

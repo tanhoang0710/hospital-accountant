@@ -36,7 +36,7 @@ public class ItemServiceImpl implements IItemService {
 
     @Override
     public Page<ItemResDto> getAllItems(Pageable pageable, int typeId) {
-        return itemRepository.findByCategoryTypeId(pageable, (long) typeId).map(ele -> ItemResDto.builder()
+        return itemRepository.findByCategoryTypeIdOrderByLastModifiedDateDesc(pageable, (long) typeId).map(ele -> ItemResDto.builder()
                 .id(ele.getId())
                 .name(ele.getName())
                 .merchandise(ele.getMerchandise())

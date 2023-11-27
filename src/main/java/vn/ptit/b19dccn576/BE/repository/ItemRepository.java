@@ -16,7 +16,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
             "and year(i.lastModifiedDate) = :year")
     List<Item> getItemByTypeAndMonth(String type, String year, String month);
 
-    Page<Item> findByCategoryTypeId(Pageable pageable, Long typeId);
+    Page<Item> findByCategoryTypeIdOrderByLastModifiedDateDesc(Pageable pageable, Long typeId);
 
     @Query("SELECT i FROM Item i JOIN FETCH i.category " +
             "WHERE i.category.type.id = :type " +

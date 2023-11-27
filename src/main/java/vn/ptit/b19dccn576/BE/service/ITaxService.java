@@ -12,6 +12,5 @@ public interface ITaxService {
     Integer getNumberOfCategoryNeedToTaxByTypeAndMonth(String month, String year, String type);
     List<Item> getCategoryPercentage(String month, String year, String type);
     List<Item> getItemsByYear(String type, String year);
-
     void export(HttpServletResponse response) throws IOException;
 }

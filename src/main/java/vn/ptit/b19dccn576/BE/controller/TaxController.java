@@ -70,15 +70,15 @@ public class TaxController {
         if (ExcelHelper.hasExcelFormat(file)) {
             try {
                 taxUsecase.importCategories(file);
-                message = "Uploaded the file successfully: " + file.getOriginalFilename();
+                message = "Tải file " + file.getOriginalFilename() + " thành công !";
                 return BaseResponse.ofSucceeded(message);
             } catch (Exception e) {
-                message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-                return BaseResponse.ofSucceeded(message);
+                message = "Không tải được file: " + file.getOriginalFilename() + "!";
+                return BaseResponse.ofFailed(e, message);
             }
         }
 
-        message = "Please upload an excel file!";
-        return BaseResponse.ofSucceeded(message);
+        message = "Vui lòng tải file excel!";
+        return BaseResponse.ofFailed(new Exception(), message);
     }
 }

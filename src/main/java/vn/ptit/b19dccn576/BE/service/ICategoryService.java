@@ -7,7 +7,7 @@ import vn.ptit.b19dccn576.BE.model.Category;
 import java.util.List;
 
 public interface ICategoryService {
-    List<Category> getAllCategories();
+    List<Category> getAllCategories(int type);
 
     Category save(CategoryDto category);
 

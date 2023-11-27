@@ -45,8 +45,8 @@ public class BaseResponse<T> {
         return response;
     }
 
-    public static BaseResponse<Void> ofFailed(Exception error, String message) {
-        BaseResponse<Void> response = new BaseResponse<>();
+    public static BaseResponse<String> ofFailed(Exception error, String message) {
+        BaseResponse<String> response = new BaseResponse<>();
         response.meta.code = "500";
         response.meta.message = message;
         response.meta.internalMessage = error.toString();

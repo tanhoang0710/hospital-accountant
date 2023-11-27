@@ -15,4 +15,6 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
             "and c.percentage > 0 " +
             "and year(c.lastModifiedDate) = :year")
     List<Category> getCategoriesByTypeAndMonth(String type, String year, String month);
+
+    List<Category> findByTypeId(Long type);
 }

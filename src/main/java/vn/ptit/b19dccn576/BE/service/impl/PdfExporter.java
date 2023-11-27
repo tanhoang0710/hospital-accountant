@@ -4,8 +4,10 @@ import com.lowagie.text.*;
 import com.lowagie.text.Font;
 import com.lowagie.text.pdf.*;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.ptit.b19dccn576.BE.model.Type;
+import vn.ptit.b19dccn576.BE.service.IItemService;
 import vn.ptit.b19dccn576.BE.service.IPdfExporter;
 
 import java.awt.*;
@@ -14,6 +16,8 @@ import java.util.List;
 
 @Service
 public class PdfExporter implements IPdfExporter {
+    @Autowired
+    private IItemService itemService;
     private List<Type> types = List.of(Type.builder().id(1L).name("123").build(), Type.builder().id(2L).name("456").build());
 
     private void writeTableHeader(PdfPTable table) {
@@ -34,11 +38,15 @@ public class PdfExporter implements IPdfExporter {
 
         table.addCell(cell);
 
+        cell.setPhrase(new Phrase("Nhóm"));
+
+        table.addCell(cell);
+
         cell.setPhrase(new Phrase("Giá trị hàng hóa"));
 
         table.addCell(cell);
 
-        cell.setPhrase(new Phrase("Thuế suất"));
+        cell.setPhrase(new Phrase("Thuế suất (%)"));
 
         table.addCell(cell);
 
@@ -48,12 +56,16 @@ public class PdfExporter implements IPdfExporter {
     }
 
     private void writeTableData(PdfPTable table) {
-        table.addCell("1");
-        table.addCell("Pfizer");
-        table.addCell("Vắc xin");
-        table.addCell("100.000.000");
-        table.addCell("5%");
-        table.addCell("5.000.000");
+        var items = itemService.getItemsByTypeAndMonth("11", "2023", "2");
+        items.forEach(item -> {
+            table.addCell(String.valueOf(item.getId()));
+            table.addCell(item.getMerchandise());
+            table.addCell(item.getName());
+            table.addCell(item.getCategory().getName());
+            table.addCell(String.valueOf(item.getPrice() * item.getQuantity()));
+            table.addCell(String.valueOf(item.getCategory().getPercentage()));
+            table.addCell(String.valueOf(item.getPrice() * item.getQuantity() * item.getCategory().getPercentage() / 100));
+        });
     }
 
     @Override
@@ -83,9 +95,9 @@ public class PdfExporter implements IPdfExporter {
         tenDaiLy.setAlignment(Paragraph.ALIGN_LEFT);
         document.add(tenDaiLy);
 
-        PdfPTable table = new PdfPTable(6);
+        PdfPTable table = new PdfPTable(7);
         table.setWidthPercentage(100f);
-        table.setWidths(new float[] {1.5f, 2.5f, 3.0f, 3.0f, 1.5f, 2.5f});
+        table.setWidths(new float[] {1.5f, 2.5f, 3.0f, 3.0f, 1.5f, 2.5f, 1.5f});
         table.setSpacingBefore(10);
 
         writeTableHeader(table);
